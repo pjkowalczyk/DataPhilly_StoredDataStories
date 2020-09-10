@@ -7,5 +7,5 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
 * Required software  
 * Required packages  
    * **R**: I'll be making use of **[pacman](https://github.com/trinker/pacman)**, a package management tool for R. This tool will load libraries and - *conveniently* - install those libraries that need to be installed. 
-   * **Python**
+   * **Python**: under construction
 * A few test cases (if these run successfully, you're good-to-go)

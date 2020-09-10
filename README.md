@@ -5,11 +5,11 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
 
 ### Before the Workshop ... ###  
 * Required software  
-  * **R**  
+  * **R**: Install the latest version of R from the Comprehensive R Archive Network ([CRAN](https://cran.r-project.org)).  
   * **RStudio**  
   * **Python**  
   * **Jupyter Notebook**
-  * **LaTeX** LaTeX needs to be installed to generate PDF output. It's recommended that R Markdown users who have not installed LaTeX install **[TinyTeX](https://yihui.name/tinytex/)**.<sup>[1](#RMarkdown)</sup> To do so, execute the following commands:  
+  * **LaTeX**: LaTeX needs to be installed to generate PDF output. It's recommended that R Markdown users who have not installed LaTeX install **[TinyTeX](https://yihui.name/tinytex/)**.<sup>[1](#RMarkdown)</sup> To do so, execute the following commands:  
             <br>
             &nbsp;&nbsp;&nbsp;&nbsp;install.packages("tinytex")  
             &nbsp;&nbsp;&nbsp;&nbsp;library(tinytex)  

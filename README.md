@@ -19,7 +19,9 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
    * **Python**: <img src = '/images/UnderConstruction.png' width='100' height='35'>  
 <br>
 * A few test cases (if these run successfully, you're good-to-go)  
+
 ##### HTML  
+
 ##### PDF  
 
 ***  

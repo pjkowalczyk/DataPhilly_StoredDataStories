@@ -7,5 +7,5 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
 * Required software  
 * Required packages  
    * **R**: I'll be making use of **[pacman](https://github.com/trinker/pacman)**, a package management tool for R. This tool will load libraries and - *conveniently* - install those libraries that need to be installed. 
-   * **Python**: ![Under Construction](/images/UnderConstruction.png)
+   * **Python**: ![Under Construction](/images/UnderConstruction.png =50X50)
 * A few test cases (if these run successfully, you're good-to-go)

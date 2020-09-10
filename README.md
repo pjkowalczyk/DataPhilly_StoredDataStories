@@ -21,6 +21,9 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
 * A few test cases (if these run successfully, you're good-to-go)  
 
  * **HTML**  
+  1. Open Simple_HTML_Presentation.Rmd in RStudio  
+  2. 'Knit' Simple_HTML_Presentation.Rmd  
+  3. The output should be identical to Simple_HTML_Presentation.html  
  * **PDF**  
 
 ***  

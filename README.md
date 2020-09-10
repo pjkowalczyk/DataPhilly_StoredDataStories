@@ -19,6 +19,8 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
    * **Python**: <img src = '/images/UnderConstruction.png' width='100' height='35'>  
 <br>
 * A few test cases (if these run successfully, you're good-to-go)  
+##### HTML  
+##### PDF  
 
 ***  
 <a name="RMarkdown">1</a>: Xie, Yihui, Joseph J. Allaire, and Garrett Grolemund. *R markdown: The definitive guide.* CRC Press, 2018.

@@ -10,7 +10,7 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
   * **Python**  
   * **Jupyter Notebook**
   * **LaTeX**  
-    LaTeX needs to be installed to generate PDF output. It's recommended that R Markdown users who have not installed LaTeX install **[TinyTeX](https://yihui.name/tinytex/)**.[^1] To do so, execute the following commands:  
+    LaTeX needs to be installed to generate PDF output. It's recommended that R Markdown users who have not installed LaTeX install **[TinyTeX](https://yihui.name/tinytex/)**.<sup>1</sup> To do so, execute the following commands:  
             install.packages("tinytex")  
             library(tinytex)  
             tinytex::install_tinytex()  
@@ -19,4 +19,5 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
    * **Python**: <img src = '/images/UnderConstruction.png' width='100' height='35'>
 * A few test cases (if these run successfully, you're good-to-go)  
 
-[^1]: Xie, Yihui, Joseph J. Allaire, and Garrett Grolemund. *R markdown: The definitive guide.* CRC Press, 2018.
+***  
+1: Xie, Yihui, Joseph J. Allaire, and Garrett Grolemund. *R markdown: The definitive guide.* CRC Press, 2018.

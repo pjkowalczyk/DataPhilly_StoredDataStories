@@ -7,9 +7,9 @@ output: slidy_presentation
 ---
 
 ```{r setup, include=FALSE}
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load('knitr', 'markdown', 'utils', 'ggplot2')
 knitr::opts_chunk$set(echo = FALSE)
-library(utils)
-library(ggplot2)
 ```
 
 ## Overview

@@ -1,0 +1,45 @@
+---
+title: "DataPhilly Fall Workshops 2020"
+subtitle: "Workshop #1: From Stored Data to Data Stories"
+author: "P J Kowalczyk"
+date: "`r Sys.Date()`"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(utils)
+library(ggplot2)
+```
+
+## Overview
+
+This workshop will take one through the steps associated with an end-to-end machine learning campaign: data retrieval; data curation; model construction, evaluation, selection and interpretation; and reporting. Particular attention will be paid to reporting, i.e., building a narrative. Examples will be presented demonstrating how one might generate multiple output formats (e.g., HTML pages, presentation slides, PDF documents) starting with the same code base.  
+
+As a specific example, a data narrative will be built showing how one might build predictive models for the toxicity of organic molecules. Reports will be presented as (1) an HTML file, (2) a PDF or Word document (in a format acceptable for journal submission), and (3) a slide presentation.  
+
+While the workshop’s example comes from the field of cheminformatics, the computational tools used and the exercises presented are applicable to any field where an investigator is interested in building predictive models, and describing these models to colleagues and associates.  
+
+At the workshop’s conclusion attendees will have worked through exercises that may serve as templates to be used with their data as they build their data narratives.
+
+## A machine learning workflow
+
+<h2>R in Action</h2>
+<center>
+<img src="images/Kabacoff.jpg" alt="Kabacoff" width="750"/>
+</center>  
+
+## Data Summary
+
+```{r data_summary, echo = FALSE, fig.align = 'center'}
+qaz <- read.csv('data/H3.csv')
+ggplot2::ggplot(data = qaz, aes(x = pKi)) +
+  geom_histogram(binwidth = 0.1, color="darkblue", fill="lightblue") +
+  ggtitle("Assay Results", subtitle = "Distributiuon of pKi Data")
+```
+
+## Disclaimer
+
+```{r JackSparrow, echo=FALSE, fig.cap="A pirate codes...", fig.align = 'center'}
+knitr::include_graphics("images/JackSparrowCode.png")
+```

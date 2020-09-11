@@ -24,11 +24,11 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
   * **HTML**  
    1. Open Simple_HTML_Presentation.Rmd in RStudio  
    2. 'Knit' Simple_HTML_Presentation.Rmd  
-   3. The output should be identical to Simple_HTML_Presentation.html  
+   3. The output should match Simple_HTML_Presentation.html  
   * **PDF**  
    1. Open Tufte_PDF_Example.Rmd in RStudio  
    2. 'Knit' Tufte_PDF_Example.Rmd  
-   3. The output should be identical to Tufte_PDF_Example.pdf  
+   3. The output should match Tufte_PDF_Example.pdf  
 
 ***  
 <a name="RMarkdown">1</a>: Xie, Yihui, Joseph J. Allaire, and Garrett Grolemund. *R markdown: The definitive guide.* CRC Press, 2018.

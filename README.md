@@ -18,16 +18,17 @@ Greetings / Salvete / Schöne Grüße / Salutations / Pozdrowienia
    * **R**: I'll be making use of **[pacman](https://github.com/trinker/pacman)**, a package management tool for R. This tool will load libraries and - *conveniently* - install those libraries that need to be installed. 
    * **Python**: <img src = '/images/UnderConstruction.png' width='100' height='35'>  
 <br>  
+
 * A few test cases (if these run successfully, you're good-to-go)  
 
- * **HTML**  
-  1. Open Simple_HTML_Presentation.Rmd in RStudio  
-  2. 'Knit' Simple_HTML_Presentation.Rmd  
-  3. The output should be identical to Simple_HTML_Presentation.html  
- * **PDF**  
-  1. Open Tufte_PDF_Example.Rmd in RStudio  
-  2. 'Knit' Tufte_PDF_Example.Rmd  
-  3. The output should be identical to Tufte_PDF_Example.pdf  
+  * **HTML**  
+   1. Open Simple_HTML_Presentation.Rmd in RStudio  
+   2. 'Knit' Simple_HTML_Presentation.Rmd  
+   3. The output should be identical to Simple_HTML_Presentation.html  
+  * **PDF**  
+   1. Open Tufte_PDF_Example.Rmd in RStudio  
+   2. 'Knit' Tufte_PDF_Example.Rmd  
+   3. The output should be identical to Tufte_PDF_Example.pdf  
 
 ***  
 <a name="RMarkdown">1</a>: Xie, Yihui, Joseph J. Allaire, and Garrett Grolemund. *R markdown: The definitive guide.* CRC Press, 2018.

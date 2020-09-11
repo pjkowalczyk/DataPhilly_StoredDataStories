@@ -1,0 +1,68 @@
+---
+title: "DataPhilly Workshop: storedDATAstories"
+subtitle: "PDF Document Example"
+author: "P J Kowalczyk"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load('knitr', 'tufte', 'markdown', 'utils', 'ggplot2', 'formatR')
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+# Introduction
+
+This workshop will take one through the steps associated with an end-to-end machine learning campaign: data retrieval; data curation; model construction, evaluation, selection and interpretation; and reporting. Particular attention will be paid to reporting, i.e., building a narrative. Examples will be presented demonstrating how one might generate multiple output formats (e.g., HTML pages, presentation slides, PDF documents) starting with the same code base.  
+
+As a specific example, a data narrative will be built showing how one might build predictive models for the toxicity of organic molecules. Reports will be presented as (1) an HTML file, (2) a PDF or Word document (in a format acceptable for journal submission), and (3) a slide presentation.  
+
+While the workshop’s example comes from the field of cheminformatics, the computational tools used and the exercises presented are applicable to any field where an investigator is interested in building predictive models, and describing these models to colleagues and associates.  
+
+At the workshop’s conclusion attendees will have worked through exercises that may serve as templates to be used with their data as they build their data narratives.  
+
+# Machine Learning Workflows  
+
+## CRISP-DM  
+
+```{r CRISP-DM-main, fig.margin = TRUE, fig.cap = "CRISP-DM.", fig.width = 3.5, fig.height = 3.5, cache=TRUE, echo = FALSE}
+knitr::include_graphics("images/CRISPDM_Process_Diagram.png")
+```
+
+**CR**oss-**I**ndustry **S**tandard **P**rocess for **D**ata **M**ining is an open standard process model that describes common approaches used by data mining experts. The sequence of the phases is not strict and moving back and forth between different phases is always required. The arrows in the process diagram indicate the most important and frequent dependencies between phases. The outer circle in the diagram symbolizes the cyclic nature of data mining itself. A data mining process continues after a solution has been deployed. The lessons learned during the process can trigger new, often more focused business questions, and subsequent data mining processes will benefit from the experiences of previous ones.
+
+## R in Action  
+
+While the material presented during this Workshop will address all steps in an end-to-end machine learning workflow, particular attention will be paid to *reporting* the steps and outcomes.
+
+```{r kabacoff-margin, fig.margin = FALSE, fig.cap = "Machine Learning Workflow, taken from 'R in Action'.", fig.width = 3.5, fig.height = 3.5, cache = TRUE, message = FALSE, echo = FALSE}
+knitr::include_graphics("images/Kabacoff.jpg")
+```
+
+# Tables  
+
+```{r echo = FALSE}
+qaz <- read.csv('data/H3.csv')
+knitr::kable(
+  qaz[sample(nrow(qaz), 10), c(2, 5, 6)], caption = 'A subset of the H3 dataset.'
+)
+```
+
+# Data Summary
+
+Figure 1 is a **png** file; Figure 2 is a **jpg** file. It is also possible to dynamically generate figures.  
+
+```{r data_summary, echo = FALSE, fig.align = 'center', fig.cap = 'Distributiuon of pKi Data. This figure is generated when the document is Knit.'}
+qaz <- read.csv('data/H3.csv')
+ggplot2::ggplot(data = qaz, aes(x = pKi)) +
+  geom_histogram(binwidth = 0.1, color="darkblue", fill="lightblue")
+```
+

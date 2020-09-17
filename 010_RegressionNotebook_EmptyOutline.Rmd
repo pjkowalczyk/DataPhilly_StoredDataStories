@@ -1,0 +1,35 @@
+---
+title: "010_Regression"
+subtitle: "R Notebook"
+author: "DataPhilly Workshop"  
+date: "`r Sys.time()`"
+output: html_notebook
+---
+
+# Install packages / Load libraries
+
+# DataPhilly 'branding'
+
+# Read data
+
+# Plot distribution of endpoint values
+
+# Build stratified testing and training datasets
+
+# Curate data
+
+## remove near-zero variance descriptors
+
+## remove highly correlated descriptors
+
+## center and scale descriptors
+
+# Build predictive models
+
+## Random Forest Regression
+
+## Support Vector Machine Regression
+
+## k-Nearest Neighbor Regression
+
+

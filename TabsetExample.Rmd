@@ -1,0 +1,254 @@
+---
+title: "Science is like magic, only real"
+author: "P J Kowalczyk"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+```{r set-up, echo = FALSE, warning = FALSE, message = FALSE}
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load("tidyverse", "magrittr", "ggthemes", "caret",
+               "corrplot", "IDPmisc", "randomForest", "e1071", "class", "stats", "utils",
+               "stringi", "tufte", "tufterhandout")
+```
+
+> “The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty.” <br>
+> ― Winston Churchill
+
+## Bioconcentration Factor (BCF) {.tabset}
+
+### Introduction
+
+`r stri_rand_lipsum(nparagraphs = 3, start_lipsum = TRUE)`
+
+### Experimental
+
+#### Data
+
+```{r expt1, echo = FALSE, message = FALSE, warning = FALSE}
+stri_rand_lipsum(nparagraphs = 1, start_lipsum = TRUE)
+```
+
+<h4>Machine Learning</h4>
+
+```{r expt2, echo = FALSE, message = FALSE, warning = FALSE}
+stri_rand_lipsum(nparagraphs = 1, start_lipsum = TRUE)
+```
+
+```{r branding, echo = FALSE, message = FALSE, warning = FALSE}
+# DataPhilly 'branding'
+DataPhilly_colors <- c('#004785', # Wharton blue
+                       '#f74902', # Flyers orange
+                       '#a90533', # Wharton red
+                       '#004953', # Eagles (midnight) green
+                       '#ffc600', # Drexel yellow
+                       '#c1c6c8'  # Temple silver
+)
+
+DataPhilly_theme <- function(base_family = "serif",
+                             base_size = 12,
+                             plot_title_family = 'sans',
+                             plot_title_size = 20,
+                             plot_title_color = DataPhilly_colors[1],
+                             grid_col = '#dadada') {
+  # use these variables
+  aplot <-
+    ggplot2::theme_minimal(base_family = base_family, base_size = base_size) #piggyback on theme_minimal
+  aplot <- aplot + theme(panel.grid = element_line(color = grid_col))
+  aplot <-
+    aplot + theme(
+      plot.title = element_text(
+        size = plot_title_size,
+        family = plot_title_family,
+        color = plot_title_color
+      )
+    )
+  aplot
+}
+```
+
+```{r read_data, echo = FALSE, message = FALSE, warning = FALSE}
+# Read data
+df <- read.csv('data/BCF.csv', stringsAsFactors = FALSE) %>%
+  NaRV.omit()
+
+# bookkeeping
+colnames(df)[1] <- 'ID'
+colnames(df)[2] <- 'EndPt'
+descriptors <- colnames(df)[3:ncol(df)]
+```
+### Distribution of endpoint values
+
+```{r plot_orig_data, echo = FALSE, message = FALSE, warning = FALSE}
+ggplot2::ggplot(df, aes(x = EndPt)) +
+  geom_histogram(binwidth = 0.1, fill = DataPhilly_colors[1], colour = "white") +
+  scale_fill_manual(values = DataPhilly_colors) +
+  DataPhilly_theme() +
+  labs(
+    title = 'log(BCF) Endpoint Distribution',
+    subtitle = 'BCF = Bioconcentration Factor',
+    x = 'log(BCF)',
+    y = 'Count',
+    caption = 'DataPhilly Workshop: StoredDataStories'
+  )
+```
+
+### Stratified testing and training datasets
+
+```{r train_test, echo = FALSE, message = FALSE, warning = FALSE}
+inTrain = caret::createDataPartition(df$EndPt, p = 0.8, list = FALSE)
+dfTrain <- df[inTrain, ]
+dfTest <- df[-inTrain, ]
+
+dfTrain$set <- 'train'
+dfTest$set <- 'test'
+
+df <- rbind(dfTrain, dfTest)
+
+ggplot(df, aes(x = EndPt,  colour = set)) +
+  geom_density() +
+  scale_colour_manual(values = DataPhilly_colors) +
+  DataPhilly_theme() +
+  labs(
+    title = 'log(BCF) Endpoint Distribution: Train & Test Sets',
+    subtitle = 'BCF = Bioconcentration Factor',
+    x = 'log(BCF)',
+    y = "Density",
+    caption = 'DataPhilly Workshop: StoredDataStories'
+  )
+
+X_train <- dfTrain %>%
+  select(-ID, -EndPt, -set)
+y_train <- dfTrain %>%
+  select(EndPt) %>%
+  data.frame()
+
+X_test <- dfTest %>%
+  select(-ID, -EndPt, -set)
+y_test <- dfTest %>%
+  select(EndPt) %>%
+  data.frame()
+```
+
+### Results {.tabset}
+
+```{r curate_data, echo = FALSE, message = FALSE, warning = FALSE}
+## remove near-zero variance descriptors
+nzv <- caret::nearZeroVar(X_train, freqCut = 100/0)
+# colnames(X_train[ , nzv])
+X_train <- X_train[ , -nzv]
+### and
+X_test <- X_test[ , -nzv]
+
+## remove highly correlated descriptors
+correlations <- cor(X_train)
+# corrplot::corrplot(correlations, order = 'hclust')
+highCorr <- findCorrelation(correlations, cutoff = 0.85)
+# colnames(X_train[ , highCorr])
+X_train <- X_train[ , -highCorr]
+### and
+X_test <- X_test[ , -highCorr]
+
+# correlations <- cor(X_train)
+# corrplot::corrplot(correlations, order = 'hclust')
+
+## center and scale descriptors
+preProcValues <- preProcess(X_train, method = c("center", "scale"))
+
+X_trainTransformed <- predict(preProcValues, X_train)
+### and
+X_testTransformed <- predict(preProcValues, X_test)
+
+train <- cbind(y_train, X_trainTransformed)
+test <- cbind(y_test, X_testTransformed)
+```
+
+#### Random Forest  
+
+```{r rf, echo = FALSE, message = FALSE, warning = FALSE}
+rf <- randomForest(EndPt ~ ., data = train, importance = TRUE)
+
+rf.pred <- predict(rf, X_testTransformed)
+
+y_predict <- predict(rf, newdata = X_testTransformed) %>%
+  data.frame()
+colnames(y_predict) <- c('Predicted')
+
+data2plot <- cbind(y_test, y_predict)
+
+summary(lm(Predicted ~ EndPt, data = data2plot))
+
+rf_plot <-
+  ggplot(data2plot, aes(EndPt, Predicted)) +
+  geom_point(colour = DataPhilly_colors[1], size = 2) +
+  geom_smooth(method = 'lm') +
+  labs(title = 'Random Forest') +
+  scale_colour_manual(values = DataPhilly_colors) +
+  DataPhilly_theme()
+rf_plot <- rf_plot + geom_abline(intercept = 0,
+                                 slope = 1,
+                                 colour = 'red')
+rf_plot
+```
+
+#### Support Vector Machine  
+
+```{r svm, echo = FALSE, message = FALSE, warning = FALSE}
+sVect <- svm(
+  EndPt ~ .,
+  data = train,
+  method = "C-classification",
+  kernal = "radial",
+  gamma = 0.1,
+  cost = 10
+)
+
+y_predict <- predict(sVect, newdata = X_testTransformed) %>%
+  data.frame()
+colnames(y_predict) <- c('Predicted')
+
+data2plot <- cbind(y_test, y_predict)
+
+summary(lm(Predicted ~ EndPt, data = data2plot))
+
+svm_plot <-
+  ggplot(data2plot, aes(EndPt, Predicted)) +
+  geom_point(colour = DataPhilly_colors[1], size = 2) +
+  geom_smooth(method = 'lm') +
+  labs(title = 'SVM') +
+  scale_colour_manual(values = DataPhilly_colors) +
+  DataPhilly_theme()
+svm_plot <- svm_plot + geom_abline(intercept = 0,
+                                 slope = 1,
+                                 colour = 'red')
+svm_plot
+```
+
+#### k-Nearest Neighbors  
+
+```{r kNN, echo = FALSE, message = FALSE, warning = FALSE}
+neighbors <- knn(X_trainTransformed, X_testTransformed, cl = dfTrain$EndPt, k = 5)
+
+y_predict <- neighbors %>%
+  as.character() %>%
+  as.numeric() %>%
+  data.frame()
+colnames(y_predict) <- c('Predicted')
+
+data2plot <- cbind(y_test, y_predict)
+
+summary(lm(Predicted ~ EndPt, data = data2plot))
+
+neighbors_plot <-
+  ggplot(data2plot, aes(EndPt, Predicted)) +
+  geom_point(colour = DataPhilly_colors[1], size = 2) +
+  geom_smooth(method = 'lm') +
+  labs(title = 'k-Nearest Neighbors',
+       subtitle = 'k = 5') +
+  scale_colour_manual(values = DataPhilly_colors) +
+  DataPhilly_theme()
+neighbors_plot <- neighbors_plot + geom_abline(intercept = 0,
+                                               slope = 1,
+                                               colour = 'red')
+neighbors_plot
+```

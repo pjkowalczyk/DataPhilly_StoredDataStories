@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Excursus.utf8</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Excursus_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="Excursus_files/reveal.js-3.3.0.1/css/theme/serif.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="reveal.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <script src="Excursus_files/header-attrs-2.3/header-attrs.js"></script>
+    <script src="Excursus_files/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <script src="Excursus_files/viz-1.8.2/viz.js"></script>
+    <link href="Excursus_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+    <script src="Excursus_files/grViz-binding-1.0.6.1/grViz.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+</section>
+<section id="section" class="title-slide slide level1"><h1></h1><h1>
+Stored Data To Data Stories
+</h1>
+<br>
+<h3 align="right">
+DataPhilly Fall Workshops 2020
+</h3>
+<h3 align="right">
+2020-09-17
+</h3>
+<br>
+<h2 align="left">
+Workshop GitHub Repository:
+</h2>
+<p><a href="https://github.com/pjkowalczyk/DataPhilly_StoredDataStories" style="float: right;">https://github.com/pjkowalczyk/DataPhilly_StoredDataStories</a></p></section>
+<section id="section-1" class="title-slide slide level1"><h1></h1><h1>
+Stored Data To Data Stories
+</h1>
+<br>
+<h3 align="right">
+DataPhilly Fall Workshops 2020
+</h3>
+<h3 align="right">
+2020-09-17
+</h3>
+<br>
+<h4 align="right">
+Paul J Kowalczyk, PhD
+</h4>
+<h5 align="right">
+Senior Data Scientist / Solvay R&amp;I Centre Bristol
+</h5>
+<h5 align="right">
+<a href="mailto:pauljkowalczyk@gmail.com" class="email">pauljkowalczyk@gmail.com</a>
+</h5>
+<p><a href="linked.com/in/PaulJKowalczyk" style="float: right;">linked.com/in/PaulJKowalczyk</a></p></section>
+<section id="section-2" class="title-slide slide level1"><h1></h1><br>
+<center>
+<img src="images/Netflix.png" alt="Timeline..." width="775" height="600"/>
+</center></section>
+<section id="section-3" class="title-slide slide level1"><h1></h1><br>
+<center>
+<img src="images/Timeline.png" alt="Timeline..." width="1000"/>
+</center></section>
+<section><section id="section-4" class="title-slide slide level1"><h1></h1><center>
+<img src="images/JackSparrowCode.png" alt="A pirate codes..." width="600"/>
+</center></section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<p>All code</p>
+<ul>
+<li class="fragment">has been tested,<br />
+</li>
+<li class="fragment">runs successfully, and<br />
+</li>
+<li class="fragment">is bug-free.<br />
+<br> <br></li>
+</ul>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<p>All code</p>
+<ul>
+<li>has been tested,<br />
+</li>
+<li>runs successfully<sup>1</sup>, and<br />
+</li>
+<li>is bug-free<sup>2</sup>.<br />
+<br> <br> <small> [1.] maybe not recently, but it has run … at least, I remember it running<br />
+[2.] should a <em>bug</em> be found (the chances of which are small … OK … small-<em>ish</em>), workshop attendees are invited to accept the bug as a <em>learning opportunity</em><br />
+</small></li>
+</ul>
+</section></section>
+<section><section id="section-7" class="title-slide slide level1"><h1></h1><p>"Don’t get discouraged because there’s a lot of mechanical work to writing. There is, and you can’t get out of it. I rewrote the first part of ‘A Farewell to Arms’ at least fifty times. You’ve got to work it over. The first draft of anything is sh*t. When you first start to write you get all the kick and the reader gets none, but after you learn to work, it’s your object to convey everything to the reader so that he remembers it not as a story he had read but something that happened to himself."<br />
+- Ernest Hemingway</p></section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<p>"Don’t get discouraged because there’s a lot of mechanical work to writing. There is, and you can’t get out of it. I rewrote the first part of ‘A Farewell to Arms’ at least fifty times. You’ve got to work it over. <span style="color:red">The first draft of anything is sh*t.</span> When you first start to write you get all the kick and the reader gets none, but after you learn to work, it’s your object to convey everything to the reader so that he remembers it not as a story he had read but something that happened to himself.</span>"<br />
+- Ernest Hemingway</p>
+</section>
+<section id="section-9" class="slide level2">
+<h2></h2>
+<p>"Don’t get discouraged because there’s a lot of mechanical work to writing. There is, and you can’t get out of it. I rewrote the first part of ‘A Farewell to Arms’ at least fifty times. You’ve got to work it over. <span style="color:red">The first draft of anything is sh*t.</span> When you first start to write you get all the kick and the reader gets none, but after you learn to work, <span style="color:red">it’s your object to convey everything to the reader so that he remembers it not as a story he had read but something that happened to himself.</span>"<br />
+- Ernest Hemingway</p>
+</section></section>
+<section id="section-10" class="title-slide slide level1"><h1></h1><br>
+<center>
+<img src="images/Panic.png" alt="Timeline..." width="1000"/>
+</center></section>
+<section><section id="machine-learning-workflows" class="title-slide slide level1"><h1>Machine Learning Workflows</h1><font size="4">
+<h2>
+<b>CR</b>oss-<b>I</b>ndustry <b>S</b>tandard <b>P</b>rocess for <b>D</b>ata <b>M</b>ining
+</h2>
+</font>
+<center>
+<img src="images/CRISPDM_Process_Diagram.png" alt="CRISP-DM" width="500"/>
+</center></section>
+<section id="section-11" class="slide level2">
+<h2></h2>
+<h2>
+R for Data Science
+</h2>
+<font size="4">
+<h2>
+H. Wickham &amp; G. Grolemund; <b>ISBN-13:</b> 978-1491910399
+</h2>
+</font>
+<center>
+<br><br><br><br> <img src="images/R4DS.png" alt="R4DS" width="600"/>
+</center>
+</section>
+<section id="section-12" class="slide level2">
+<h2></h2>
+<h2>
+R in Action
+</h2>
+<center>
+<img src="images/Kabacoff.jpg" alt="Kabacoff" width="750"/>
+</center>
+</section>
+<section id="same-content-via-rdiagrammer" class="slide level2">
+<h2>… same content, via <strong>R::DiagrammeR</strong></h2>
+<br> <br>
+<center>
+<div id="htmlwidget-87072ced5f85c6609776" style="width:768px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-87072ced5f85c6609776">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n\n  node [shape = rectangle]\n  rec1 [label = \"Import Data\"]\n  rec2 [label = \"Prepare, Explore, and Clean Data\"]\n  rec3 [label = \"Fit a Statistical Model\"]\n  rec4 [label = \"Evaluate Model Prediction on New Data\"]\n  rec5 [label = \"Produce Report\"]\n  rec6 [label = \"Cross-Validate the Model\"]\n  rec7 [label = \"Evaluate the Model Fit\"]\n\n  # edge definitions with the node IDs\n  rec1 -> rec2\n  rec2 -> rec3\n  rec3 -> rec4\n  rec4 -> rec5\n  rec3 -> rec6\n  rec6 -> rec3\n  rec3 -> rec7\n  rec7 -> rec3\n  rec7 -> rec2\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</center>
+</section>
+<section id="comparing" class="slide level2">
+<h2>…comparing…</h2>
+<div class="col2">
+<p><img data-src="images/Kabacoff.jpg" /><div id="htmlwidget-3a269d09640bd6f899e1" style="width:400px;height:600px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3a269d09640bd6f899e1">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = TB]\n\n  node [shape = rectangle]\n  rec1 [label = \"Import Data\"]\n  rec2 [label = \"Prepare, Explore, and Clean Data\"]\n  rec3 [label = \"Fit a Statistical Model\"]\n  rec4 [label = \"Evaluate Model Prediction on New Data\"]\n  rec5 [label = \"Produce Report\"]\n  rec6 [label = \"Cross-Validate the Model\"]\n  rec7 [label = \"Evaluate the Model Fit\"]\n\n  # edge definitions with the node IDs\n  rec1 -> rec2\n  rec2 -> rec3\n  rec3 -> rec4\n  rec4 -> rec5\n  rec3 -> rec6\n  rec6 -> rec3\n  rec3 -> rec7\n  rec7 -> rec3\n  rec7 -> rec2\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script></p>
+</div>
+</section></section>
+<section id="html-vs-pdf" class="title-slide slide level1"><h1>HTML vs PDF</h1><br>
+<center>
+<img src="images/Whack-A-Mole.jpg" alt="Whack-A-Mole..." width="500"/>
+</center></section>
+<section id="data-scientist" class="title-slide slide level1"><h1>Data Scientist</h1><br>
+<center>
+<img src="images/okapi.jpg" alt="Okapi..." width="500"/>
+</center></section>
+    </div>
+  </div>
+
+  <script src="Excursus_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="Excursus_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: false,
+        // Opens links in an iframe preview overlay
+        previewLinks: true,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

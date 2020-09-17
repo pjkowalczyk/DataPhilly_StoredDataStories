@@ -1,0 +1,226 @@
+---
+output:
+  revealjs::revealjs_presentation:
+    transition: fade  
+    theme: serif  
+    css: reveal.css
+    self_contained: false
+    reveal_options:
+      slideNumber: true
+      previewLinks: true
+      incremental: true
+---
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+```{r libraries, message = FALSE, warning = FALSE, echo = FALSE}
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load("DiagrammeR")
+```
+
+# 
+
+<h1> Stored Data To Data Stories </h1>
+<br>
+<h3 align="right"> DataPhilly Fall Workshops 2020 </h3>
+<h3 align="right"> 2020-09-17 </h3>
+<br>
+<h2 align="left"> Workshop GitHub Repository: </h2>
+<a href="https://github.com/pjkowalczyk/DataPhilly_StoredDataStories" style="float: right;">https://github.com/pjkowalczyk/DataPhilly_StoredDataStories</a>
+
+# 
+
+<h1> Stored Data To Data Stories </h1>
+<br>
+<h3 align="right"> DataPhilly Fall Workshops 2020 </h3>
+<h3 align="right"> 2020-09-17 </h3>
+<br>
+<h4 align="right"> Paul J Kowalczyk, PhD </h4>
+<h5 align="right"> Senior Data Scientist / Solvay R&I Centre Bristol </h5>
+<h5 align="right">pauljkowalczyk@gmail.com</h5>
+<a href="linked.com/in/PaulJKowalczyk" style="float: right;">linked.com/in/PaulJKowalczyk</a>
+
+#  
+
+<br>
+<center>
+<img src="images/Netflix.png" alt="Timeline..." width="775" height="600"/>
+</center>
+
+#  
+
+<br>
+<center>
+<img src="images/Timeline.png" alt="Timeline..." width="1000"/>
+</center>
+
+# 
+
+<center>
+<img src="images/JackSparrowCode.png" alt="A pirate codes..." width="600"/>
+</center>
+
+##
+
+All code  
+
+> - has been tested,  
+> - runs successfully, and  
+> - is bug-free.  
+<br>
+<br>  
+
+##
+
+All code  
+
+* has been tested,  
+* runs successfully<sup>1</sup>, and  
+* is bug-free<sup>2</sup>.  
+<br>
+<br>
+<small>
+[1.] maybe not recently, but it has run ... at least, I remember it running   
+[2.] should a *bug* be found (the chances of which are small ... OK ... small-*ish*), workshop attendees are invited to accept the bug as a *learning opportunity*  
+</small>
+
+# 
+
+"Don't get discouraged because there's a lot of mechanical work to writing. There is, and you can't get out of it. I rewrote the first part of 'A Farewell to Arms' at least fifty times. You've got to work it over. The first draft of anything is sh*t. When you first start to write you get all the kick and the reader gets none, but after you learn to work, it's your object to convey everything to the reader so that he remembers it not as a story he had read but something that happened to himself."  
+- Ernest Hemingway
+
+##
+
+"Don't get discouraged because there's a lot of mechanical work to writing. There is, and you can't get out of it. I rewrote the first part of 'A Farewell to Arms' at least fifty times. You've got to work it over. <span style="color:red">The first draft of anything is sh*t.</span> When you first start to write you get all the kick and the reader gets none, but after you learn to work, it's your object to convey everything to the reader so that he remembers it not as a story he had read but something that happened to himself.</span>"  
+- Ernest Hemingway
+
+##
+
+"Don't get discouraged because there's a lot of mechanical work to writing. There is, and you can't get out of it. I rewrote the first part of 'A Farewell to Arms' at least fifty times. You've got to work it over. <span style="color:red">The first draft of anything is sh*t.</span> When you first start to write you get all the kick and the reader gets none, but after you learn to work, <span style="color:red">it's your object to convey everything to the reader so that he remembers it not as a story he had read but something that happened to himself.</span>"  
+- Ernest Hemingway
+
+#  
+
+<br>
+<center>
+<img src="images/Panic.png" alt="Timeline..." width="1000"/>
+</center>
+
+# Machine Learning Workflows
+<font size="4">
+<h2><b>CR</b>oss-<b>I</b>ndustry <b>S</b>tandard <b>P</b>rocess for <b>D</b>ata <b>M</b>ining</h2>
+</font>
+<center>
+<img src="images/CRISPDM_Process_Diagram.png" alt="CRISP-DM" width="500"/>
+</center>
+
+##
+<h2>R for Data Science</h2>
+<font size="4">
+<h2>H. Wickham \& G. Grolemund; <b>ISBN-13:</b> 978-1491910399</h2>
+</font>
+<center>
+<br><br><br><br>
+<img src="images/R4DS.png" alt="R4DS" width="600"/>
+</center>
+
+##
+<h2>R in Action</h2>
+<center>
+<img src="images/Kabacoff.jpg" alt="Kabacoff" width="750"/>
+</center>
+
+## ... same content, via **R::DiagrammeR**
+
+<br>
+<br>
+<center>
+```{r flowchart, message = FALSE, warning = FALSE, echo = FALSE}
+DiagrammeR::grViz(
+  "digraph {
+  graph [layout = dot, rankdir = TB]
+
+  node [shape = rectangle]
+  rec1 [label = 'Import Data']
+  rec2 [label = 'Prepare, Explore, and Clean Data']
+  rec3 [label = 'Fit a Statistical Model']
+  rec4 [label = 'Evaluate Model Prediction on New Data']
+  rec5 [label = 'Produce Report']
+  rec6 [label = 'Cross-Validate the Model']
+  rec7 [label = 'Evaluate the Model Fit']
+
+  # edge definitions with the node IDs
+  rec1 -> rec2
+  rec2 -> rec3
+  rec3 -> rec4
+  rec4 -> rec5
+  rec3 -> rec6
+  rec6 -> rec3
+  rec3 -> rec7
+  rec7 -> rec3
+  rec7 -> rec2
+  }",
+  height = 400
+)
+```
+</center>
+
+## ...comparing...
+
+<div class="col2">
+```{r compare, echo = FALSE}
+{knitr::include_graphics("images/Kabacoff.jpg")}
+{DiagrammeR::grViz(
+  "digraph {
+  graph [layout = dot, rankdir = TB]
+
+  node [shape = rectangle]
+  rec1 [label = 'Import Data']
+  rec2 [label = 'Prepare, Explore, and Clean Data']
+  rec3 [label = 'Fit a Statistical Model']
+  rec4 [label = 'Evaluate Model Prediction on New Data']
+  rec5 [label = 'Produce Report']
+  rec6 [label = 'Cross-Validate the Model']
+  rec7 [label = 'Evaluate the Model Fit']
+
+  # edge definitions with the node IDs
+  rec1 -> rec2
+  rec2 -> rec3
+  rec3 -> rec4
+  rec4 -> rec5
+  rec3 -> rec6
+  rec6 -> rec3
+  rec3 -> rec7
+  rec7 -> rec3
+  rec7 -> rec2
+  }",
+  width = 400,
+  height = 600
+)}
+```
+</div>
+
+# HTML vs PDF  
+
+<br>
+<center>
+<img src="images/Whack-A-Mole.jpg" alt="Whack-A-Mole..." width="500"/>
+</center>
+
+# Data Scientist  
+
+<br>
+<center>
+<img src="images/okapi.jpg" alt="Okapi..." width="500"/>
+</center>

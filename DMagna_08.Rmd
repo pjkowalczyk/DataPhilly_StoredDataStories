@@ -1,0 +1,214 @@
+---
+title: "QSA(P)R for Ecotoxicology:"
+subtitle: "Daphnia magna"
+author: P J Kowalczyk
+date: "`r Sys.time()`"
+output:
+  rmdformats::material:
+    highlight: kate
+---
+
+```{r setup, echo=FALSE, cache=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=FALSE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+```{r libraries, echo = FALSE, message = FALSE, warning = FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(here)
+library(dplyr)
+# library(reticulate)
+# use_python("C:/Users/us16120/Anaconda3/python.exe")
+library(caret)
+library(ggplot2)
+library(ggthemes)
+library(corrplot)
+library(randomForest)
+library(e1071)
+library(hydroGOF)
+
+set.seed(42)
+```
+
+# Introduction  
+
+**Daphnia magna** is a small planktonic crustacean (adult length 1.5–5.0 mm) that belongs to the subclass Phyllopoda. It inhabits a variety of freshwater environments, ranging from acidic swamps to rivers made of snow runoff, and is broadly distributed throughout the Northern Hemisphere and South Africa.  
+
+In the recent years, ecotoxicological hazard potential of biocidal products has been receiving increasing attention in the industries and regulatory agencies. Biocides/pesticides are currently one of the most studied groups of compounds, and their registration cannot be done without the empirical toxicity information. In view of limited experimental data available for these compounds, we have developed Quantitative Structure-Activity Relationship (QSAR) models for the toxicity of biocides to Daphnia magna following principles of QSAR modeling recommended by the OECD (Organization for Economic Cooperation and Development).  
+
+# Data Retrieval  
+
+```{r access_data, message = FALSE, warning = FALSE}
+# path_to_data <- here('data', 'Khan_Chemosphere_229_8.xlsx')
+# 
+# df <-
+#   readxl::read_xlsx(path_to_data, sheet = 'Daphnia Dataset')  %>%
+#   data.frame() %>%
+#   janitor::clean_names()
+
+df <- read.csv('data/Khan_data.csv', stringsAsFactors = FALSE)
+# names(df)
+
+# df <- df %>%
+#   select(cas_number, canonical_smiles, p_ec50_mol_l_daphnia) %>%
+#   rename('CAS' = 'cas_number',
+#          'SMILES' = 'canonical_smiles',
+#          'pEC50' = 'p_ec50_mol_l_daphnia')
+```
+
+Data was retrieved from K.Khan, *et al.*, **QSAR Modeling of Daphnia Magna and Fish Toxicities of Biocides Using 2D Descriptors** Chemosphere, **229** (2019) 8 - 17.  
+
+Experimental results were reported for `r nrow(df)` molecules (observations).  
+
+```{r data_table, message = FALSE, warning = FALSE}
+# head(df)
+kable(df[ , 1:3]) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 11) %>%
+  scroll_box(height = "200px")
+```
+<br>
+The **pEC50** is defined as the negative logarithm of the EC50. If the EC50 equals 1 micromolar (10-6 molar), the log(EC50) is -6 and the pEC50 is 6. The advantage to expressing potency this way is that drugs with larger pEC50 values are more potent.  
+
+```{r pEC50_plot, message = FALSE, warning = FALSE}
+ggplot(df, aes(x = pEC50)) +
+  geom_histogram(
+    aes(y = ..density..),
+    # Histogram with density instead of count on y-axis
+    binwidth = 0.25,
+    colour = "black",
+    fill = "white"
+  ) +
+  geom_density(alpha = .2, fill = "#FF6666")  # Overlay with transparent density plot
+```
+
+
+# Calculate Predictors  
+
+RDKit was used to calculate 200 predictors (variables) for each of the `r nrow(df)` molecules. The **SMILES** strings were used to encode the molecules.
+
+![](images/RDKitPredictors.png)
+
+```{r echo = FALSE}
+kable(df) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), font_size = 11) %>%
+  scroll_box(height = "200px")
+```
+
+```{r echo = FALSE}
+str(df)
+``` 
+
+# Training Set & Test Set  
+
+```{r echo = FALSE}
+in_train <-
+  createDataPartition(df$pEC50
+                      , p = 0.8
+                      , list = FALSE)
+train <- df[in_train,] %>%
+  mutate(set = 'train') %>%
+  data.frame()
+test <- df[-in_train,] %>%
+  mutate(set = 'test') %>%
+  data.frame()
+```
+
+A stratified data selection scheme was used to build a training set and a test set from the extant data. 80% of the data (`r nrow(train)` molecules) was used for training; 20% of the data (`r nrow(test)` molecules) was used for model validation.  
+
+```{r echo = FALSE}
+X_train <- train %>%
+  select(-CAS, -SMILES, -pEC50, -set) %>%
+  data.frame()
+# dim(X_train)
+X_test <- test %>%
+  select(-CAS, -SMILES, -pEC50, -set) %>%
+  data.frame()
+# dim(X_test)
+y_train <- train %>%
+  select(pEC50) %>%
+  data.frame()
+colnames(y_train) <- c('Observed')
+# dim(y_train)
+y_test <- test %>%
+  select(pEC50) %>%
+  data.frame()
+colnames(y_test) <- c('Observed')
+# dim(y_test)
+```
+
+The density plot shows the distribution of pEC50 values in the training set and in the test set.  
+
+```{r echo = FALSE}
+data2plot <- rbind(train, test) %>%
+  data.frame()
+ggplot(data2plot, aes(x = pEC50, fill = set)) + geom_density(alpha = .3) +
+  ggthemes::theme_tufte()
+```
+
+# Data Curation 
+
+Starting with `r ncol(X_train)` calculated predictors:  
+
+1. Remove **near-zero variation predictors**  
+
+```{r echo = FALSE}
+nzv <- nearZeroVar(X_train, freqCut = 100 / 0)
+# length(nzv)
+# names(X_train[ , nzv])
+X_train_nzv <- X_train[ , -nzv]
+X_test_nzv <- X_test[ , -nzv]
+```
+
+There are `r length(nzv)` near-zero variance predictors: `r names(X_train[ , nzv])`
+<br>
+... `r ncol(X_train_nzv)` predictors remain.
+<br>
+
+2. Remove **highly correlated predictors**  
+
+```{r echo = FALSE}
+par(mfrow=c(1,2))
+
+correlations <- cor(X_train_nzv)
+# corrplot(correlations, order = "hclust", tl.cex = 0.25)
+
+highCorr <- findCorrelation(correlations, cutoff = 0.8)
+length(highCorr)
+names(X_train_nzv[ , highCorr])
+X_train_curated <- X_train_nzv[ , -highCorr]
+X_test_curated <- X_test_nzv[ , -highCorr]
+
+correlations <- cor(X_train_curated)
+# corrplot(correlations, order = "hclust", tl.cex = 0.5)
+```
+
+There are `r length(highCorr)` highly correlated predictors: `r names(X_train_nzv[ , highCorr])`
+<br>
+... `r ncol(X_train_curated)` predictors remain.
+<br>
+
+* predictors that are linear combinations  
+
+# Model: Random Forest Regression  
+
+# Model: Support Vector Machine Regression  
+
+# Summary  
+
+# Conclusion(s)  
+

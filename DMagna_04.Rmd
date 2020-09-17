@@ -1,0 +1,51 @@
+---
+title: "QSA(P)R for Ecotoxicology:"
+subtitle: "Daphnia magna"
+author: P J Kowalczyk
+date: "`r Sys.time()`"
+output:
+  rmdformats::material:
+    highlight: kate
+---
+
+```{r setup, echo=FALSE, cache=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=FALSE,
+	             cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+# Introduction  
+
+**Daphnia magna** is a small planktonic crustacean (adult length 1.5–5.0 mm) that belongs to the subclass Phyllopoda. It inhabits a variety of freshwater environments, ranging from acidic swamps to rivers made of snow runoff, and is broadly distributed throughout the Northern Hemisphere and South Africa.  
+
+In the recent years, ecotoxicological hazard potential of biocidal products has been receiving increasing attention in the industries and regulatory agencies. Biocides/pesticides are currently one of the most studied groups of compounds, and their registration cannot be done without the empirical toxicity information. In view of limited experimental data available for these compounds, we have developed Quantitative Structure-Activity Relationship (QSAR) models for the toxicity of biocides to Daphnia magna following principles of QSAR modeling recommended by the OECD (Organization for Economic Cooperation and Development).  
+
+# Data Retrieval  
+
+# Calculate Predictors  
+
+# Training Set & Test Set  
+
+# Data Curation  
+* near-zero variation predictors  
+* highly correlated predictors  
+* predictors that are linear combinations  
+
+# Model: Random Forest Regression  
+
+# Model: Support Vector Machine Regression  
+
+# Summary  
+
+# Conclusion(s)  
+
